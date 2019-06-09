@@ -10,7 +10,7 @@ timedatectl set-ntp true
 # Check for UEFI
 EFI=false
 EFIVARS=/sys/firmware/efi/efivars
-if [ -d "$EFI" ]; then
+if [ -d "$EFIVARS" ]; then
     EFI=true
 fi
 
@@ -35,10 +35,17 @@ else
 fi
 
 # Format drive
-mkswap "$drive"2
-swapon "$drive"2
-mkfs.ext4 -F "$drive"3
-mount "$drive"3 /mnt
+if [ "$EFI" = true ] ; then
+  mkswap "$drive"2
+  swapon "$drive"2
+  mkfs.ext4 -F "$drive"3
+  mount "$drive"3 /mnt
+else
+  mkswap "$drive"1
+  swapon "$drive"1
+  mkfs.ext4 -F "$drive"2
+  mount "$drive"2 /mnt
+fi
 
 # Install base
 pacstrap /mnt base
