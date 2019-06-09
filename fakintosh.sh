@@ -61,7 +61,7 @@ wget https://raw.githubusercontent.com/eb3095/fakintosh/master/fakintosh-chroot-
 mv fakintosh-chroot-installer.sh /mnt/root/fakintosh-chroot-installer.sh
 chmod +x /mnt/root/fakintosh-chroot-installer.sh
 
-echo '#!/bin/bash' >> /mnt/root/bootstrap.sh              :(
+echo '#!/bin/bash' >> /mnt/root/bootstrap.sh
 echo "/root/fakintosh-chroot-installer.sh $drive" >> /mnt/root/bootstrap.sh
 chmod +x /mnt/root/bootstrap.sh
 
