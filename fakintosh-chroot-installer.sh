@@ -48,7 +48,6 @@ echo "Enter a root password [ENTER]:"
 read -s rootpw
 
 # Set root password
-echo $rootpw | passwd root --stdin
 echo root:"$rootpw" | chpasswd
 
 echo

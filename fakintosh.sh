@@ -14,6 +14,7 @@ if [ -d "$EFIVARS" ]; then
     EFI=true
 fi
 
+echo
 echo "WARNING: THIS WILL WIPE THE DRIVE"
 echo "What drive do you want to install to? (/dev/sda) [ENTER]:"
 read drive
