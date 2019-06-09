@@ -101,7 +101,15 @@ rm -rf trizen
 popd
 
 # Install packages
-runuser -l fakintosh -c 'trizen -Sy --noconfirm weston plasma plasma-wayland-session kde-applications sddm opera pulseaudio tilix libreoffice-fresh kvantum-qt5 networkmanager nm-connection-editor network-manager-applet networkmanager-openvpn remmina notepadqq atom nvidia nvidia-settings thunderbird ufw vlc openssh nfs-utils bind-tools noto-fonts noto-fonts-extra noto-fonts-cjk noto-fonts-emoji numlockx screen nmap jq gotop iotop ccze htop expect sshuttle inkscape gimp jdk11-openjdk php sshfs ttf-ms-fonts kdeconnect ttf-dejavu ttf-liberation remmina-plugin-rdesktop plasma5-applets-kde-arch-update-notifier-git octopi filezilla opera-ffmpeg-codecs'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm weston plasma plasma-wayland-session \
+kde-applications sddm opera pulseaudio tilix libreoffice-fresh kvantum-qt5 networkmanager \
+nm-connection-editor network-manager-applet networkmanager-openvpn remmina notepadqq atom \
+nvidia nvidia-settings thunderbird ufw vlc openssh nfs-utils bind-tools noto-fonts \
+noto-fonts-extra noto-fonts-cjk noto-fonts-emoji numlockx screen nmap jq gotop iotop \
+ccze htop expect sshuttle inkscape gimp jdk11-openjdk php sshfs ttf-ms-fonts \
+kdeconnect ttf-dejavu ttf-liberation remmina-plugin-rdesktop \
+plasma5-applets-kde-arch-update-notifier-git octopi filezilla opera-ffmpeg-codecs'
+/
 
 # Enable services
 systemctl enable ufw
