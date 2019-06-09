@@ -41,7 +41,7 @@ if [ "$EFI" = true ] ; then
   swapon "$drive"2
   mkfs.ext4 -F "$drive"3
   mount "$drive"3 /mnt
-  mkdir /mnt/boot/efi
+  mkdir -p /mnt/boot/efi
   mount "$drive"1 /mnt/boot/efi
 else
   mkswap "$drive"1
