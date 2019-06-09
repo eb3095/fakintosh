@@ -7,7 +7,7 @@
 # Check for UEFI
 EFI=false
 EFIVARS=/sys/firmware/efi/efivars
-if [ -d "$EFI" ]; then
+if [ -d "$EFIVARS" ]; then
     EFI=true
 fi
 
