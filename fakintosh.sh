@@ -10,7 +10,7 @@ timedatectl set-ntp true
 # Check for UEFI
 EFI=false
 EFIVARS=/sys/firmware/efi/efivars
-if [ -d "$EFIVARS" ]; then
+if [ -d "$EFI" ]; then
     EFI=true
 fi
 
@@ -20,11 +20,11 @@ read drive
 
 # Partition drive
 if [ "$EFI" = true ] ; then
-  parted --script /dev/vda mklabel gpt
-  parted --script /dev/vda mkpart primary fat32 1MiB 261MiB
-  parted --script /dev/vda set 1 esp on
-  parted --script /dev/vda mkpart primary linux-swap 261MiB 8.5GiB
-  parted --script /dev/vda mkpart primary ext4 8.5GiB 100%
+  parted --script $drive mklabel gpt
+  parted --script $drive mkpart primary fat32 1MiB 261MiB
+  parted --script $drive set 1 esp on
+  parted --script $drive mkpart primary linux-swap 261MiB 8.3GiB
+  parted --script $drive mkpart primary ext4 8.3GiB 100%
   mkfs.vfat -F32 "$drive"1
 else
   parted --script $drive mklabel msdos
