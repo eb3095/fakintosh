@@ -5,7 +5,7 @@
 # Author: Eric Benner
 
 # Assign arguments
-drive=$1
+drive={DRIVE}
 
 # Check for UEFI
 EFI=false

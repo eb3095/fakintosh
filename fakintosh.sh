@@ -26,7 +26,7 @@ if [ "$EFI" = true ] ; then
   parted --script $drive set 1 esp on
   parted --script $drive mkpart primary linux-swap 261MiB 8.3GiB
   parted --script $drive mkpart primary ext4 8.3GiB 100%
-  mkfs.vfat -F32 "$drive"1
+  mkfs.fat -F32 "$drive"1
 else
   parted --script $drive mklabel msdos
   parted --script $drive set 1 boot on
@@ -61,8 +61,12 @@ wget https://raw.githubusercontent.com/eb3095/fakintosh/master/fakintosh-chroot-
 mv fakintosh-chroot-installer.sh /mnt/root/fakintosh-chroot-installer.sh
 chmod +x /mnt/root/fakintosh-chroot-installer.sh
 
+echo '#!/bin/bash' >> /mnt/root/bootstrap.sh              :(
+echo "/root/fakintosh-chroot-installer.sh $drive" >> /mnt/root/bootstrap.sh
+chmod +x /mnt/root/bootstrap.sh
+
 # Copy over .zshrc
 cp /etc/skel/.zshrc /mnt/etc/skel/.zshrc
 
 # Chroot in and run second part
-arch-chroot /mnt "/root/fakintosh-chroot-installer.sh $drive"
+arch-chroot /mnt /root/bootstrap.sh
