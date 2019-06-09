@@ -4,6 +4,9 @@
 # Version: 1.0
 # Author: Eric Benner
 
+# Assign arguments
+drive=$1
+
 # Check for UEFI
 EFI=false
 EFIVARS=/sys/firmware/efi/efivars
@@ -40,31 +43,35 @@ mkinitcpio -p linux
 # Install ABSOLUTE essentials
 pacman -Sy wget git unzip zip base-devel grub zsh --noconfirm
 
+echo
 echo "Enter a root password [ENTER]:"
-read rootpw
+read -s rootpw
 
 # Set root password
 echo $rootpw | passwd root --stdin
+echo root:"$rootpw" | chpasswd
 
+echo
 echo "Enter a user [ENTER]:"
 read user
 
+echo
 echo "Enter a $user's password [ENTER]:"
-read userpw
+read -s userpw
 
 # Setup user
 mkdir /home/$user
 cp /etc/skel/.zshrc /home/$user/.zshrc
 useradd -d /home/$user $user
-echo $userpw | passwd $user --stdin
+echo $user:"$userpw" | chpasswd
 chsh -s $(which zsh) $user
 chown -R $user:$user /home/$user
 
 # Install Grub
 if [ "$EFI" = true ] ; then
-  grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB
+  grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 else
-  grub-install --target=i386-pc /dev/vda
+  grub-install --target=i386-pc $drive
 fi
 
 # Generate Grub
