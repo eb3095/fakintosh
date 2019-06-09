@@ -41,7 +41,7 @@ echo "127.0.1.1      iMac.localdomain iMac" >> /etc/hosts
 mkinitcpio -p linux
 
 # Install ABSOLUTE essentials
-pacman -Sy wget git unzip zip base-devel grub zsh --noconfirm
+pacman -Sy wget git unzip zip base-devel grub zsh efibootmgr dosfstools os-prober mtools sudo --noconfirm
 
 echo
 echo "Enter a root password [ENTER]:"
@@ -68,7 +68,7 @@ chown -R $user:$user /home/$user
 
 # Install Grub
 if [ "$EFI" = true ] ; then
-  grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+  grub-install --target=x86_64-efi  --bootloader-id=grub_uefi
 else
   grub-install --target=i386-pc $drive
 fi
