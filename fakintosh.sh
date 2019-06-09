@@ -66,7 +66,8 @@ echo '#!/bin/bash' >> /mnt/root/bootstrap.sh
 echo "/root/fakintosh-chroot-installer.sh $drive" >> /mnt/root/bootstrap.sh
 chmod +x /mnt/root/bootstrap.sh
 
-# Copy over .zshrc
+# Modify and copy over .zshrc
+echo "PROMPT='%n@%ns-%m %~ %% '" >> /mnt/etc/skel/.zshrc
 cp /etc/skel/.zshrc /mnt/etc/skel/.zshrc
 
 # Chroot in and run second part
