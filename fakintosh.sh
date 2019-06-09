@@ -16,7 +16,7 @@ fi
 
 echo "WARNING: THIS WILL WIPE THE DRIVE"
 echo "What drive do you want to install to? (/dev/sda) [ENTER]:"
-read DRIVE
+read drive
 
 # Partition drive
 if [ "$EFI" = true ] ; then
@@ -25,30 +25,20 @@ if [ "$EFI" = true ] ; then
   parted --script $drive set 1 esp on
   parted --script $drive mkpart primary linux-swap 261MiB 8.5GiB
   parted --script $drive mkpart primary ext4 8.5GiB 100%
-  mkfs.fat -F32 "$drive"1
+  mkfs.fat -F -F32 "$drive"1
 else
   parted --script $drive mklabel msdos
-  parted --script $drive mkpart primary ext4 1MiB 100MiB
   parted --script $drive set 1 boot on
-  parted --script $drive mkpart primary linux-swap 100MiB 8.2GiB
-  parted --script $drive mkpart primary ext4 8.2GiB 100%
-  mkfs.ext4 "$drive"1
+  parted --script $drive mkpart primary linux-swap 1MiB 8GiB
+  parted --script $drive mkpart primary ext4 8GiB 100%
+  mkfs.ext4 -F "$drive"1
 fi
 
 # Format drive
 mkswap "$drive"2
 swapon "$drive"2
-mkfs.ext4 "$drive"3
+mkfs.ext4 -F "$drive"3
 mount "$drive"3 /mnt
-
-# Mount drive
-if [ "$EFI" = true ] ; then
-  mkdir /mnt/efi
-  mount "$drive"1 /mnt/efi
-else
-  mkdir /mnt/boot
-  mount "$drive"1 /mnt/boot
-fi
 
 # Install base
 pacstrap /mnt base
@@ -61,4 +51,4 @@ wget https://raw.githubusercontent.com/eb3095/fakintosh/master/fakintosh-chroot-
 mv fakintosh-chroot-installer.sh /mnt/root/fakintosh-chroot-installer.sh
 
 # Chroot in and run second part
-arch-chroot /mnt /mnt/root/fakintosh-chroot-installer.sh
+arch-chroot /mnt /root/fakintosh-chroot-installer.sh
