@@ -25,7 +25,7 @@ if [ "$EFI" = true ] ; then
   parted --script /dev/vda set 1 esp on
   parted --script /dev/vda mkpart primary linux-swap 261MiB 8.5GiB
   parted --script /dev/vda mkpart primary ext4 8.5GiB 100%
-  mkfs.fat -F32 "$drive"1
+  mkfs.vfat -F32 "$drive"1
 else
   parted --script $drive mklabel msdos
   parted --script $drive set 1 boot on
