@@ -80,6 +80,8 @@ groupadd wheelnpw
 # Setup installer
 useradd fakintosh
 usermod -aG wheelnpw fakintosh
+mkdir /home/fakintosh
+chown fakintosh:fakintosh /home/fakintosh
 
 # Install Grub
 if [ "$EFI" = true ] ; then
@@ -92,24 +94,28 @@ fi
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Install trizen
-pushd /root/
+pushd /tmp
 git clone https://aur.archlinux.org/trizen.git
-cd trizen
-makepkg -si
-cd ..
-rm -rf trizen
 popd
+chmod -R 777 /tmp/trizen
+runuser -l fakintosh -c 'cd /tmp/trizen;makepkg -si --noconfirm'
+rm -rf /tmp/trizen
 
 # Install packages
-runuser -l fakintosh -c 'trizen -Sy --noconfirm weston plasma plasma-wayland-session \
-kde-applications sddm opera pulseaudio tilix libreoffice-fresh kvantum-qt5 networkmanager \
-nm-connection-editor network-manager-applet networkmanager-openvpn remmina notepadqq atom \
-nvidia nvidia-settings thunderbird ufw vlc openssh nfs-utils bind-tools noto-fonts \
-noto-fonts-extra noto-fonts-cjk noto-fonts-emoji numlockx screen nmap jq gotop iotop \
-ccze htop expect sshuttle inkscape gimp jdk11-openjdk php sshfs ttf-ms-fonts \
-kdeconnect ttf-dejavu ttf-liberation remmina-plugin-rdesktop \
-plasma5-applets-kde-arch-update-notifier-git octopi filezilla opera-ffmpeg-codecs'
-/
+runuser -l fakintosh -c 'trizen -Sy --noconfirm weston plasma plasma-wayland-session'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm kde-applications sddm opera pulseaudio'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm tilix libreoffice-fresh kvantum-qt5'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm networkmanager nm-connection-editor'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm network-manager-applet networkmanager-openvpn'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm remmina notepadqq atom nvidia nvidia-settings'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm thunderbird ufw vlc openssh nfs-utils bind-tools'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm noto-fonts noto-fonts-extra noto-fonts-cjk'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm noto-fonts-emoji numlockx screen nmap jq'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm gotop iotop ccze htop expect sshuttle inkscape'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm gimp jdk11-openjdk php sshfs ttf-ms-fonts'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm kdeconnect ttf-dejavu ttf-liberation'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm remmina-plugin-rdesktop plasma5-applets-kde-arch-update-notifier-git'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm octopi filezilla opera-ffmpeg-codecs'
 
 # Enable services
 systemctl enable ufw
@@ -126,6 +132,7 @@ ufw allow 22
 
 # Dispose of installer user
 userdel fakintosh
+rm -rf /home/fakintosh
 
 # Cleanup
 rm /root/fakintosh-chroot-installer.sh
