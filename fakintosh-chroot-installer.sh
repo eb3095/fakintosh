@@ -78,8 +78,8 @@ sed -i -e 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 groupadd wheelnpw
 
 # Setup installer
-uderadd fakintosh
-usermod -aG wheelnpw
+useradd fakintosh
+usermod -aG wheelnpw fakintosh
 
 # Install Grub
 if [ "$EFI" = true ] ; then
