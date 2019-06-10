@@ -21,7 +21,7 @@ ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 hwclock --systohc
 
 # Configure locale
-sed -i -e "s/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 
 # Generate locale
 locale-gen
@@ -111,11 +111,17 @@ runuser -l fakintosh -c 'trizen -Sy --noconfirm remmina notepadqq atom nvidia nv
 runuser -l fakintosh -c 'trizen -Sy --noconfirm thunderbird ufw vlc openssh nfs-utils bind-tools'
 runuser -l fakintosh -c 'trizen -Sy --noconfirm noto-fonts noto-fonts-extra noto-fonts-cjk'
 runuser -l fakintosh -c 'trizen -Sy --noconfirm noto-fonts-emoji numlockx screen nmap jq'
-runuser -l fakintosh -c 'trizen -Sy --noconfirm gotop iotop ccze htop expect sshuttle inkscape'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm gotop iotop ccze expect sshuttle inkscape'
 runuser -l fakintosh -c 'trizen -Sy --noconfirm gimp jdk11-openjdk php sshfs ttf-ms-fonts'
 runuser -l fakintosh -c 'trizen -Sy --noconfirm kdeconnect ttf-dejavu ttf-liberation'
 runuser -l fakintosh -c 'trizen -Sy --noconfirm remmina-plugin-rdesktop plasma5-applets-kde-arch-update-notifier-git'
 runuser -l fakintosh -c 'trizen -Sy --noconfirm octopi filezilla opera-ffmpeg-codecs'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm ark cairo-dock cairo-dock-plug-ins-git wireless_tools'
+runuser -l fakintosh -c 'trizen -Sy --noconfirm gtk-engine-murrine gtk-engines'
+runuser -l fakintosh -c 'trizen --remove --noconfirm kwrite konsole konqueror kmail'
+
+# Fix permissions for iw
+setcap cap_net_raw,cap_net_admin=eip /usr/bin/iwconfig
 
 # Enable services
 systemctl enable ufw

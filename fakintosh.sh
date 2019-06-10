@@ -67,13 +67,13 @@ echo "/root/fakintosh-chroot-installer.sh $drive" >> /mnt/root/bootstrap.sh
 chmod +x /mnt/root/bootstrap.sh
 
 # Modify and copy over .zshrc
+cp /etc/skel/.zshrc /mnt/etc/skel/.zshrc
 echo "PROMPT='%n@%ns-%m %~ %% '" >> /mnt/etc/skel/.zshrc
 echo "autoload -Uz compinit" >> /mnt/etc/skel/.zshrc
 echo "compinit" >> /mnt/etc/skel/.zshrc
 echo "zstyle ':completion:*' menu select" >> /mnt/etc/skel/.zshrc
 echo "setopt COMPLETE_ALIASES" >> /mnt/etc/skel/.zshrc
 echo "zstyle ':completion::complete:*' gain-privileges 1" >> /mnt/etc/skel/.zshrc
-cp /etc/skel/.zshrc /mnt/etc/skel/.zshrc
 
 # Chroot in and run second part
 arch-chroot /mnt /root/bootstrap.sh
