@@ -123,12 +123,12 @@ runuser -l fakintosh -c 'trizen --remove --noconfirm kwrite konsole konqueror km
 # Fix permissions for iw
 setcap cap_net_raw,cap_net_admin=eip /usr/bin/iwconfig
 
-# Enable services
+# Enable/Disable services
 systemctl enable ufw
 systemctl enable sddm
 systemctl enable sshd
 systemctl enable NetworkManager
-systemctl enable dhcpcd
+systemctl disable dhcpcd
 
 
 # Configure Firewall
