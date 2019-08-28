@@ -1,3 +1,5 @@
+# WIP
+
 # Fakintosh
 This is an installation script for Arch that mimics OSX. To install use the following commands after booting to the Arch ISO,
 
